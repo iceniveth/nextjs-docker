@@ -1,0 +1,24 @@
+FROM node:16-alpine
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+ENV PORT 3333
+
+EXPOSE $PORT
+
+CMD npm run dev
+
+
+# Via Ubuntu shell instead of remote vscode
+# docker build -t nextjsproject -f Dockerfile.dev .
+
+# docker run -v "$(pwd):/app" -p 3333:3333 nextjsproject
+# or
+# docker run -v "/home/iceniveth/nextjs-docker:/app" -p 3333:3333 nextjsproject
+
+
+
+# https://stackoverflow.com/questions/41485217/mount-current-directory-as-a-volume-in-docker-on-windows-10

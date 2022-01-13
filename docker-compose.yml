@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    env_file:
+      - .env.local
+    volumes:
+      - ./:/app
+    ports:
+      - "3333:3333"
